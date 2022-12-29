@@ -36,7 +36,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/c/FTVLIVE/live)
+        $(youtube-dl -g https://www.youtube.com/watch?v=ylYJSBUgaMA)
         EOL
     - name: Get ctsnews.m3u8
       run: |
@@ -45,7 +45,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/c/華視直播頻道/live)
+        $(youtube-dl -g https://www.youtube.com/watch?v=wM0g8EoUZ_E)
         EOL
     - name: Get ctvnews.m3u8
       run: |
@@ -83,10 +83,10 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/c/newsebc/live)
         EOL
-    - name: Get hyxw.m3u8
+    - name: Get gbnews.m3u8
       run: |
-        touch ./hyxw.m3u8
-        sudo cat >./hyxw.m3u8 <<EOL
+        touch ./gbnews.m3u8
+        sudo cat >./gbnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
@@ -101,10 +101,10 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=2mCSYvcfhtc)
         EOL
-    - name: Get ebcfinancialnews.m3u8
+    - name: Get ebcfnews.m3u8
       run: |
-        touch ./ebcfinancialnews.m3u8
-        sudo cat >./ebcfinancialnews.m3u8 <<EOL
+        touch ./ebcfnews.m3u8
+        sudo cat >./ebcfnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
@@ -131,25 +131,25 @@ jobs:
     - name: Get mnews.m3u8
       run: |
         touch ./mnews.m3u8
-        sudo cat >./daai1.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UC4LjkybVKXCDlneVXlKAbmw/live)
-        EOL
-    - name: Get jingnews.m3u8
-      run: |
-        touch ./jingnews.m3u8
-        sudo cat >./daai2.m3u8 <<EOL
+        sudo cat >./mnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=5n0y6b0Q25o)
         EOL
-    - name: Get daai3.m3u8
+    - name: Get jingnews.m3u8
       run: |
-        touch ./daai3.m3u8
-        sudo cat >./daai3.m3u8 <<EOL
+        touch ./jingnews.m3u8
+        sudo cat >./jingnews.m3u8 <<EOL
+        #EXTM3U
+        #EXT-X-VERSION:3
+        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
+        $(youtube-dl -g https://www.youtube.com/watch?v=5n0y6b0Q25o)
+        EOL
+    - name: Get daai1.m3u8
+      run: |
+        touch ./daai1.m3u8
+        sudo cat >./daai1.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
@@ -189,7 +189,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=lu_BJKxqGnk)
+        $(youtube-dl -g https://www.youtube.com/ctitv/live)
         EOL
     - name: Get gstv.m3u8
       run: |
@@ -200,19 +200,11 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
         $(youtube-dl -g https://www.youtube.com/channel/UCoo-jAsJgM8z09ddlhcBlSA/live)
         EOL
-    - name: Get parliamentarytv1.m3u8
+    
+    - name: Get parliamentarytv.m3u8
       run: |
-        touch ./parliamentarytv1.m3u8
-        sudo cat >./parliamentarytv1.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=PQLMD4iHhG8)
-        EOL
-    - name: Get parliamentarytv2.m3u8
-      run: |
-        touch ./parliamentarytv2.m3u8
-        sudo cat >./parliamentarytv2.m3u8 <<EOL
+        touch ./parliamentarytv.m3u8
+        sudo cat >./parliamentarytv.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
@@ -326,14 +318,14 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
         $(youtube-dl -g https://www.youtube.com/user/NBC2swfl/live)
         EOL
-    - name: Get rtuknews.m3u8
+    - name: Get gbnews.m3u8
       run: |
-        touch ./rtuknews.m3u8
-        sudo cat >./rtuknews.m3u8 <<EOL
+        touch ./gbnews.m3u8
+        sudo cat >./gbnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/user/RTUKnews/live)
+        $(youtube-dl -g https://www.youtube.com/watch?v=8WX6YL9JnLw)
         EOL
 
     - name: Get aljazeera.m3u8
@@ -379,7 +371,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-        $(youtube-dl -g https://www.youtube.com/watch?v=NjugILSG_Wo)
+        $(youtube-dl -g https://www.youtube.com/watch?v=ammKkVgtIHw)
         EOL
     - name: Get hokkaidonews.m3u8
       run: |
@@ -415,7 +407,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=XBPjVzSoepo)
+        $(youtube-dl -g https://www.youtube.com/watch?v=86YLFOog4GM)
         EOL
     - name: Get ipanda.m3u8
       run: |
@@ -424,7 +416,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=uGMUb2gYeCg)
+        $(youtube-dl -g https://www.youtube.com/watch?v=MIA8AKVZ0Yk)
         EOL
     - name: Get kpop.m3u8
       run: |
@@ -453,15 +445,7 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=wrYF0HX7Kzc)
         EOL
-    - name: Get 8fm.m3u8
-      run: |
-        touch ./8fm.m3u8
-        sudo cat >./8fm.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=GOiCIPAtdHA)
-        EOL
+    
     - name: Get learnenglish1.m3u8
       run: |
         touch ./learnenglish1.m3u8
@@ -469,26 +453,9 @@ jobs:
         #EXTM3U_sd
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=gunaWMrfOoc)
+        $(youtube-dl -g https://www.youtube.com/watch?v=jj4pjptZD_0)
         EOL
-    - name: Get learnjapanese.m3u8
-      run: |
-        touch ./learnjapanese.m3u8
-        sudo cat >./learnjapanese.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=7zY3u9kOMbQ)
-        EOL
-    - name: Get abcsing.m3u8
-      run: |
-        touch ./abcsing.m3u8
-        sudo cat >./abcsing.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=GjWg196TWKM)
-        EOL
+    
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
