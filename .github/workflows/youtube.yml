@@ -99,7 +99,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=2mCSYvcfhtc)
+        $(youtube-dl -g https://www.youtube.com/c/tvbsnews01/live)
         EOL
     - name: Get ebcfnews.m3u8
       run: |
@@ -108,7 +108,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=LbS-xQ67fos)
+        $(youtube-dl -g https://www.youtube.com/user/57etfn/live)
         EOL
     - name: Get cctv4.m3u8
       run: |
@@ -137,15 +137,7 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=5n0y6b0Q25o)
         EOL
-    - name: Get jingnews.m3u8
-      run: |
-        touch ./jingnews.m3u8
-        sudo cat >./jingnews.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=5n0y6b0Q25o)
-        EOL
+   
     - name: Get daaione.m3u8
       run: |
         touch ./daaione.m3u8
@@ -270,7 +262,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UC1_E8NeF5QHY2dtdLRBCCLA/live)
+        $(youtube-dl -g https://www.youtube.com/c/africanews/live)
         EOL
     - name: Get arirangtv.m3u8
       run: |
@@ -280,15 +272,6 @@ jobs:
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/user/arirang/live)
-        EOL
-    - name: Get arirangnews.m3u8
-      run: |
-        touch ./arirangnews.m3u8
-        sudo cat >./arirangnews.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-        $(youtube-dl -g https://www.youtube.com/watch?v=APlvA2wtdKk)
         EOL
     - name: Get cna.m3u8
       run: |
@@ -308,23 +291,32 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/channel/UCcZg5r9hBqK_VPUT2I7eYVw/live)
         EOL
-    - name: Get japanews.m3u8
+    - name: Get annnews.m3u8
       run: |
         touch ./japanews.m3u8
         sudo cat >./japanews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=coYw-eVU0Ks)
+        $(youtube-dl -g https://www.youtube.com/user/ANNnewsCH/live)
         EOL
-    - name: Get bloombergfinance.m3u8
+    - name: Get bloomberg.m3u8
       run: |
-        touch ./bloombergfinance.m3u8
-        sudo cat >./bloombergfinance.m3u8 <<EOL
+        touch ./bloomberg.m3u8
+        sudo cat >./bloomberg.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/user/Bloomberg/live)
+        EOL
+    - name: Get nbcnews.m3u8
+      run: |
+        touch ./nbcnews.m3u8
+        sudo cat >./nbcnews.m3u8 <<EOL
+        #EXTM3U
+        #EXT-X-VERSION:3
+        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
+        $(youtube-dl -g https://www.youtube.com/c/nbcnews/live)
         EOL
     - name: Get nbc2.m3u8
       run: |
@@ -342,7 +334,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=8WX6YL9JnLw)
+        $(youtube-dl -g https://www.youtube.com/c/GBNewsOnline/live)
         EOL
 
     - name: Get aljazeera.m3u8
@@ -361,7 +353,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UC7fWeaHhqgM4Ry-RMpM2YYw/live)
+        $(youtube-dl -g https://www.youtube.com/c/trtworld/live)
         EOL
     - name: Get france24.m3u8
       run: |
@@ -379,7 +371,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-        $(youtube-dl -g https://www.youtube.com/EuronewsUSA/live)
+        $(youtube-dl -g https://www.youtube.com/c/euronews/live)
         EOL
     - name: Get dwnews.m3u8
       run: |
@@ -388,7 +380,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-        $(youtube-dl -g https://www.youtube.com/watch?v=ammKkVgtIHw)
+        $(youtube-dl -g https://www.youtube.com/c/dwnews/live)
         EOL
     - name: Get hokkaidonews.m3u8
       run: |
@@ -397,7 +389,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UCSWOnDD1KIriGmyQ7SgNA4A/live)
+        $(youtube-dl -g https://www.youtube.com/c/htbnews/live)
         EOL
     - name: Get yntnews.m3u8
       run: |
@@ -406,7 +398,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UChlgI3UHCOnwUGzWzbJ3H5w/live)
+        $(youtube-dl -g https://www.youtube.com/c/ytnnews24/live)
         EOL
     - name: Get nasaearthview.m3u8
       run: |
@@ -467,7 +459,7 @@ jobs:
       run: |
         touch ./learnenglish1.m3u8
         sudo cat >./learnenglish1.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=jj4pjptZD_0)
@@ -476,7 +468,7 @@ jobs:
       run: |
         touch ./learnenglish2.m3u8
         sudo cat >./learnenglish2.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=8VzqZ5f_X0o)
@@ -485,7 +477,7 @@ jobs:
       run: |
         touch ./learnenglish3.m3u8
         sudo cat >./learnenglish3.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=F75n8Y-kTHs)
@@ -494,43 +486,43 @@ jobs:
       run: |
         touch ./nhkworld.m3u8
         sudo cat >./nhkworld.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=f0lYkdA-Gtw)
+        $(youtube-dl -g https://www.youtube.com/c/nhkworldjapan/live)
         EOL
     - name: Get cgtn.m3u8
       run: |
         touch ./cgtn.m3u8
         sudo cat >./cgtn.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=FGabkYr-Sfs)
         EOL
-    - name: Get cgtnfr.m3u8
+    - name: Get cgtneurope.m3u8
       run: |
-        touch ./cgtnfr.m3u8
-        sudo cat >./cgtnfr.m3u8 <<EOL
-        #EXTM3U_sd
+        touch ./cgtneurope.m3u8
+        sudo cat >./cgtneurope.m3u8 <<EOL
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=oWwQuAN-KZc)
+        $(youtube-dl -g https://www.youtube.com/c/cgtneurope/live)
         EOL
-    - name: Get foxlive.m3u8
+    - name: Get livenowfox.m3u8
       run: |
-        touch ./foxlive.m3u8
-        sudo cat >./foxlive.m3u8 <<EOL
-        #EXTM3U_sd
+        touch ./livenowfox.m3u8
+        sudo cat >./livenowfox.m3u8 <<EOL
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=KhR7rC6_rwg)
+        $(youtube-dl -g https://www.youtube.com/c/livenowfox/live)
         EOL 
     - name: Get tbsnews.m3u8
       run: |
         touch ./tbsnews.m3u8
         sudo cat >./tbsnews.m3u8 <<EOL
-        #EXTM3U_sd
+        #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=H3D90-436C4)
