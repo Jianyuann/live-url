@@ -45,7 +45,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=wM0g8EoUZ_E)
+        $(youtube-dl -g https://www.youtube.com/c/ctstw/live)
         EOL
     - name: Get ctvnews.m3u8
       run: |
@@ -155,7 +155,7 @@ jobs:
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=DTNkEm6jaqQ)
-        EOL       
+        EOL
     - name: Get phoenixnews.m3u8
       run: |
         touch ./phoenixnews.m3u8
@@ -209,7 +209,6 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
         $(youtube-dl -g https://www.youtube.com/channel/UCoo-jAsJgM8z09ddlhcBlSA/live)
         EOL
-    
     - name: Get parliamentarytv.m3u8
       run: |
         touch ./parliamentarytv.m3u8
@@ -300,14 +299,14 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=coYw-eVU0Ks)
         EOL
-    - name: Get jnnnews.m3u8
+    - name: Get tbsnews.m3u8
       run: |
-        touch ./jnnnews.m3u8
-        sudo cat >./jnnnews.m3u8 <<EOL
+        touch ./tbsnews.m3u8
+        sudo cat >./tbsnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/watch?v=kOgujMlRHB8)
+        $(youtube-dl -g https://www.youtube.com/watch?v=WVDrujgTEBY)
         EOL
     - name: Get bloomberg.m3u8
       run: |
@@ -345,7 +344,6 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/c/GBNewsOnline/live)
         EOL
-
     - name: Get aljazeera.m3u8
       run: |
         touch ./aljazeera.m3u8
@@ -443,7 +441,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(youtube-dl -g https://www.youtube.com/channel/UCoRXPcv8XK5fAplLbk9PTww/live)
+        $(youtube-dl -g https://www.youtube.com/c/thekpop/live)
         EOL
     - name: Get hitfm.m3u8
       run: |
@@ -463,7 +461,6 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=wrYF0HX7Kzc)
         EOL
-    
     - name: Get skynews.m3u8
       run: |
         touch ./skynews.m3u8
@@ -500,37 +497,36 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/c/cgtneurope/live)
         EOL
-    - name: Get livenowfox.m3u8
+    - name: Get foxlivenow.m3u8
       run: |
-        touch ./livenowfox.m3u8
-        sudo cat >./livenowfox.m3u8 <<EOL
+        touch ./foxlivenow.m3u8
+        sudo cat >./foxlivenow.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/c/livenowfox/live)
-        EOL 
-    - name: Get tbsnews.m3u8
+        EOL
+    - name: Get jnnnews.m3u8
       run: |
-        touch ./tbsnews.m3u8
-        sudo cat >./tbsnews.m3u8 <<EOL
+        touch ./jnnnews.m3u8
+        sudo cat >./jnnnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(youtube-dl -g https://www.youtube.com/watch?v=H3D90-436C4)
-        EOL  
-      
+        EOL
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: YTlive m3u8
+        name: ytblive m3u8
         path: .
-    - name: Git push assets to "YTlive" branch
+    - name: Git push assets to "ytblive" branch
       run: |
         git init
         git config --local user.name "actions"
         git config --local user.email "action@github.com"
         git checkout -b YTlive
         git add .
-        git commit -m "Update YTlive"
+        git commit -m "Update ytblive"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
-        git push -f -u origin YTlive
+        git push -f -u origin ytblive
