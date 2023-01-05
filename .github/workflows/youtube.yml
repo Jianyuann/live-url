@@ -525,7 +525,7 @@ jobs:
         git init
         git config --local user.name "actions"
         git config --local user.email "action@github.com"
-        git checkout -b YTlive
+        git checkout -b ytblive
         git add .
         git commit -m "Update ytblive"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
