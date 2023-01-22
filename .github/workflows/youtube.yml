@@ -66,14 +66,14 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(yt-dlp -g https://www.youtube.com/c/三立LIVE新聞/live)
         EOL
-    - name: Get rtnews.m3u8
+    - name: Get channeltv.m3u8
       run: |
-        touch ./rtnews.m3u8
-        sudo cat >./rtnews.m3u8 <<EOL
+        touch ./channeltv.m3u8
+        sudo cat >./channeltv.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://vk.com/video-154921046_456246797)
+        $(yt-dlp -g https://www.youtube.com/c/ChannelsTelevision/live)
         EOL
     - name: Get setinews.m3u8
       run: |
@@ -228,19 +228,19 @@ jobs:
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(yt-dlp -g https://www.youtube.com/c/國會頻道/live)
         EOL
-    - name: Get abcnewsau.m3u8
+    - name: Get abcaustralia.m3u8
       run: |
-        touch ./abcnewsau.m3u8
-        sudo cat >./abcnewsau.m3u8 <<EOL
+        touch ./abcaustralia.m3u8
+        sudo cat >./abcaustralia.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(yt-dlp -g https://www.youtube.com/user/NewsOnABC/live)
         EOL
-    - name: Get abcnewsus.m3u8
+    - name: Get abcnews.m3u8
       run: |
-        touch ./abcnewsus.m3u8
-        sudo cat >./abcnewsus.m3u8 <<EOL
+        touch ./abcnews.m3u8
+        sudo cat >./abcnews.m3u8 <<EOL
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
@@ -380,6 +380,15 @@ jobs:
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
         $(yt-dlp -g https://www.youtube.com/user/france24english/live)
+        EOL
+    - name: Get français24.m3u8
+      run: |
+        touch ./français24.m3u8
+        sudo cat >./français24.m3u8 <<EOL
+        #EXTM3U
+        #EXT-X-VERSION:3
+        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
+        $(yt-dlp -g https://www.youtube.com/c/france24/live)
         EOL
     - name: Get euronews.m3u8
       run: |
