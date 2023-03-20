@@ -1,31 +1,31 @@
 <?php
-$id = $_GET[ 'id' ];
+$id = $_GET['id']??'24';
+/*
 $channel_id = array(
-  "3" => "brtv8kappweishi", //北京卫视
-  "5" => "brtv8kappkejiao", //北京科教
-  "6" => "brtv8kappyingshi", //北京影视
-  "7" => "brtv8kappcaijing", //北京财经
+  "3" => "tiebiebang", //北京卫视
+  "5" => "kjzhonguodiyi", //北京科教
+  "6" => "yszuishi", //北京影视
+  "7" => "cjbeijingdiwu", //北京财经
   "10" => "brtv8kappqingnian", //北京青年
   "12" => "brtv8kappkaku", //卡酷少儿
-  "13" => "brtv8kappwenyi", //北京文艺
-  "14" => "brtv8kappshenghuo", //北京生活
-  "15" => "brtv8kappxinwen", //北京新闻
-  "16" => "brtv8kapp4ktiyu", //纪实科教
+  "13" => "wyyebuzadi", //北京文艺
+  "14" => "shenghuoyituanma", //北京生活
+  "15" => "xinwenzhibojian", //北京新闻
+  "16" => "kkbeijingdier", //纪实科教
   "17" => "wenyiradio8kapp", //北京文艺广播
   "18" => "sportsradio8kapp", //北京体育广播
   "19" => "musicradio8kapp", //北京音乐广播
   "20" => "jiaotongradio8kapp", //北京交通广播
-  "24" => "1502rongmeike8k", //纪实科教8K
-  "25" => "newsradio8kapp", //新闻广播
-  "26" => "newsradio8kapp", //北京新闻广播
+  "24" => "brtv8kapp8ktv", //纪实科教8K
+  "25" => "newsradio8kapp", //北京新闻广播
   "27" => "englishradio8kapp", //北京外语广播
   "28" => "cityradio8kapp", //北京城市广播
   "29" => "storyradio8kapp", //北京故事广播
   "30" => "youngradio8kapp", //北京青年广播
   "31" => "jjjradio8kapp", //京津冀之声
 );
-/*
-$bstrURL = 'https://btv8k.sobeylingyun.com/tvradio/api/getLiveConfig';
+
+$bstrURL = 'https://https://btv8kappvms.interway.com.cn/tvradio/api/getLiveConfig';
 $ch = curl_init();
 curl_setopt( $ch, CURLOPT_URL, $bstrURL );
 curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
@@ -37,12 +37,20 @@ $url = 'https://down.brtvcloud.com/brtv8kapptv/' . $channel_id[ $id ] . '.m3u8';
 $hexTime = dechex( time() + 1800 );
 $txkey = json_decode( $data )->data->tx_auth_key;
 $txSecret = md5( $txkey . $channel_id[ $id ] . $hexTime );
+
 */
-$url = 'http://down.brtvcloud.com/brtvradio8kapp/' . $channel_id[ $id ] . '.m3u8';
-$hexTime = dechex( 4102415999 );
-$txSecret = md5('N3rQKabDCaibe8EWzfMy' .$channel_id[$id]. $hexTime);
-$playurl = $url . '?txSecret=' . $txSecret . '&txTime=' . $hexTime;
-header( 'Location:' . $playurl );
+
+
+$apiUrl = 'https://btv8kappvms.interway.com.cn/tvradio/Tvfront/getTvInfo?tv_id='.$id;
+$ch = curl_init();
+curl_setopt( $ch, CURLOPT_URL, $apiUrl );
+curl_setopt( $ch, CURLOPT_RETURNTRANSFER, TRUE );
+curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, FALSE );
+$data = curl_exec( $ch );
+curl_close( $ch );
+header( 'location:' . json_decode( $data )->data->m3u8 );
+
 
 /*
 
