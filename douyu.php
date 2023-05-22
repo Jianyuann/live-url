@@ -16,6 +16,6 @@ curl_close( $ch );
 
 $url = json_decode( $data )->data->hls_url;
 $hlsName = explode( '_', basename( parse_url( $url, PHP_URL_PATH ) ) );
-$playURL = 'https://akm-tct.douyucdn.cn/live/' . $hlsName[ 0 ] . '.m3u8';
+$playURL = 'https://openhls-tct.douyucdn2.cn/live/' . $hlsName[ 0 ] . '.m3u8';
 header( 'location:' . $playURL );
 ?>
