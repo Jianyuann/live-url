@@ -208,7 +208,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/channel/UCpu3bemTQwAU8PqM4kJdoEQ/live)
+        $(yt-dlp -g https://www.youtube.com/user/CtiTv/live)
         EOL
     - name: Get gstv.m3u8
       run: |
@@ -316,7 +316,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/v/H3D90-436C4)
+        $(yt-dlp -g https://www.youtube.com/watch?v=9QlEQOYLytA)
         EOL
     - name: Get bloomberg.m3u8
       run: |
