@@ -91,7 +91,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/c/newsebc/live)
+        $(yt-dlp -g https://www.youtube.com/watch?v=khuZW5GdBXo)
         EOL
     - name: Get globalnews.m3u8
       run: |
@@ -173,7 +173,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/watch?v=dmDg7NfUoSw)
+        $(yt-dlp -g https://www.youtube.com/watch?v=if6yQq_JJyY)
     - name: Get sdtv.m3u8
       run: |
         touch ./sdtv.m3u8
@@ -262,7 +262,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/channel/UCj82QbSA3Dz9ez3W8q-_5bw/live)
+        $(yt-dlp -g https://www.youtube.com/watch?v=3aDnRkAOhqc)
         EOL
     - name: Get africanews.m3u8
       run: |
@@ -433,16 +433,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/watch?v=Y1qQZbTF8iQ)
-        EOL
-    - name: Get spaceviewearth.m3u8
-      run: |
-        touch ./spaceviewearth.m3u8
-        sudo cat >./spaceviewearth.m3u8 <<EOL
-        #EXTM3U
-        #EXT-X-VERSION:3
-        #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/watch?v=86YLFOog4GM)
+        $(yt-dlp -g https://www.youtube.com/watch?v=KG6SL6Mf7ak)
         EOL
     - name: Get ipanda.m3u8
       run: |
@@ -478,7 +469,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/watch?v=wrYF0HX7Kzc)
+        $(yt-dlp -g https://www.youtube.com/watch?v=IfNMuFqKBWs)
         EOL
     - name: Get skynews.m3u8
       run: |
@@ -523,7 +514,7 @@ jobs:
         #EXTM3U
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-        $(yt-dlp -g https://www.youtube.com/watch?v=H3D90-436C4)
+        $(yt-dlp -g https://www.youtube.com/watch?v=ifIaP87DFdg)
         EOL
     - name : Upload artifact
       uses: actions/upload-artifact@master
