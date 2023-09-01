@@ -19,7 +19,7 @@ test-cos-tencent.bestvcdn.com.cn
 
 $date = date('YmdH');
 $stream = "http://live-gitv-nm-yh.189smarthome.com/live/program/live/$id/$rate/";
-$timestamp = substr(time(), 0, 9)-2;
+$timestamp = intval(time()/10-2);
 $current = "#EXTM3U" . "\r\n";
 $current .= "#EXT-X-VERSION:3" . "\r\n";
 $current .= "#EXT-X-TARGETDURATION:10" . "\r\n";
