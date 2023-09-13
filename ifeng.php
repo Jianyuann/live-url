@@ -3,7 +3,7 @@ $id = $_GET['id'] ?? '1';
 $channelId = [
     '1' => '7c96b084-60e1-40a9-89c5-682b994fb680',  //资讯台
 '2' => 'f7f48462-9b13-485b-8101-7b54716411ec',  //中文台
-'3' => '15e02d92-1698-416c-af2f-3e9a872b4d78',  //深圳旁边台
+'3' => '15e02d92-1698-416c-af2f-3e9a872b4d78',  //香港台
 ];
 $type = $_GET['qa'] ?? 'HD';
 $authUrl = 'https://m.fengshows.com/api/v3/hub/live/auth-url?stream_type=hls&live_id=';
@@ -18,9 +18,9 @@ $liveUrl = json_decode(get_data($authUrl . $channelId[$id] . '&live_qa=' . $type
 $m3u8 = get_data($liveUrl, $headers);
 $serverUrl = 'http://qctv.fengshows.cn/live/';
 if ($type == 'audio') {
-    $playUrl = preg_replace('/(\d{4}\w{3})(_audio-\d+\.ts)\?.*/', $serverUrl . '$1$2', $m3u8);
+    $playUrl = preg_replace('/(\w{7})(_audio-\d+\.ts)\?.*/', $serverUrl . '$1$2', $m3u8);
 } else {
-    $playUrl = preg_replace('/0701(\w{3})(\d{2})(-\d+\.ts)\?.*/', $serverUrl . '0701${1}72$3', $m3u8);
+    $playUrl = preg_replace('/(\w{7})(\d{2})(-\d+\.ts)\?.*/', $serverUrl . '${1}72$3', $m3u8);
 }
 header('Content-Type: application/vnd.apple.mpegURL');
 header('Content-Disposition: attachment; filename=playlist.m3u8');
