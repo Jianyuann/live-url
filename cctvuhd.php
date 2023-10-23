@@ -1,22 +1,14 @@
 <?php
 
-$id = $_GET['id'] ?? '8kh';
+$id = $_GET['id'] ?? '4k';
 $idUrl = array(
     '4k' => 'http://livews-tp4k.cctv.cn/live/4K0219.stream/',
-	'8kh' => 'http://livews-tp4k.cctv.cn/live/4K36M/',
-    '8k' => 'http://liveten-tp4k.cctv.cn/live/4K36M/'
+    '8k25' => 'http://liveten-tp4k.cctv.cn/live/4K36M/',
+	'8k' => 'http://livews-tp4k.cctv.cn/live/4K36M/',
+	'16-4k'=> 'http://livews-tp4k.cctv.cn/live/CCTV16-4K.stream/'
 );
-function mk_dir($newDir)
-{
-    $dir = $newDir;
-    if (!is_dir('./' . $dir)) {
-        mkdir('./' . $dir, 0777, true);
-    }
-    return $dir;
-}
 
-mk_dir('./cache/');
-$cache = new Cache(3600, "cache/");
+$cache = new Cache(3600, "/tmp/cache/");
 $playUrl = $cache->get('cctv_' . $id . '_cache');
 $headers = [
     "User-Agent: cctv_app_tv",
