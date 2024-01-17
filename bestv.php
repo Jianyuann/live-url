@@ -36,8 +36,8 @@ header("Content-Disposition: attachment; filename=playlist.m3u8");
 echo $current;
 
 /*
-CCTV16-4K,  https://tvhub.vercel.app/bestv.php?id=cctv16hd4k&q=15m
-CCTV-4K,  https://tvhub.vercel.app/bestv.php?id=cctv4k&q=15m
+CCTV16-4K,  https://tvhub.vercel.app/bestv.php?id=cctv16hd4k&q=uhd
+CCTV-4K,  https://tvhub.vercel.app/bestv.php?id=cctv4k&q=uhd
 CCTV1,  https://tvhub.vercel.app/bestv.php?id=cctv1hd8m
 CCTV2,  https://tvhub.vercel.app/bestv.php?id=cctv2hd8m
 CCTV3,  https://tvhub.vercel.app/bestv.php?id=cctv38m
@@ -88,7 +88,7 @@ CCTV17,  https://tvhub.vercel.app/bestv.php?id=cctv17hd8m
 上海第一财经,  https://tvhub.vercel.app/bestv.php?id=dycjhd8m
 上视新闻,  https://tvhub.vercel.app/bestv.php?id=xwzhhd8m
 上海都市,  https://tvhub.vercel.app/bestv.php?id=dshd8m
-上海纪实,  https://tvhub.vercel.app/bestv.php?id=jspdhd&q=4m
+上海纪实,  https://tvhub.vercel.app/bestv.php?id=jspdhd&q=hd
 东方影视,  https://tvhub.vercel.app/bestv.php?id=dfyshd8m
 五星体育,  https://tvhub.vercel.app/bestv.php?id=wxtyhd8m
 上视外语,  https://tvhub.vercel.app/bestv.php?id=icshd8m
@@ -122,22 +122,22 @@ CCTV17,  https://tvhub.vercel.app/bestv.php?id=cctv17hd8m
 法治天地,  https://tvhub.vercel.app/bestv.php?id=fztd8m
 金色学堂,  https://tvhub.vercel.app/bestv.php?id=jingsepd8m
 魅力足球,  https://tvhub.vercel.app/bestv.php?id=mlyyhd8m
-CGTN, https://tvhub.vercel.app/bestv.php?id=ottcctvnews&q=1m
+CGTN, https://tvhub.vercel.app/bestv.php?id=ottcctvnews&q=ld
 CETV1HD, https://tvhub.vercel.app/bestv.php?id=zgjy1t8m
-CETV2, https://tvhub.vercel.app/bestv.php?id=cetv2&q=2m
+CETV2, https://tvhub.vercel.app/bestv.php?id=cetv2&q=sd
 CETV4HD, https://tvhub.vercel.app/bestv.php?id=zgjy4hd8m
-中国天气, https://tvhub.vercel.app/bestv.php?id=zgqx&q=1m
-内蒙古卫视,  https://tvhub.vercel.app/bestv.php?id=nmgws&q=1m
-宁夏卫视,  https://tvhub.vercel.app/bestv.php?id=nxws&q=1m
-青海卫视, https://tvhub.vercel.app/bestv.php?id=qhws&q=1m
-陕西卫视,  https://tvhub.vercel.app/bestv.php?id=sxws&q=1m
-山西卫视,  https://tvhub.vercel.app/bestv.php?id=shanxiws&q=1m
-厦门卫视,  https://tvhub.vercel.app/bestv.php?id=xmws&q=1m
-康巴卫视, https://tvhub.vercel.app/bestv.php?id=kbws&q=2m
-新疆卫视,  https://tvhub.vercel.app/bestv.php?id=xjws&q=1m
-兵团卫视,  https://tvhub.vercel.app/bestv.php?id=btws&q=1m
-西藏卫视,  https://tvhub.vercel.app/bestv.php?id=xzws&q=2m
-西藏藏语卫视,  https://tvhub.vercel.app/bestv.php?id=xzwszy&q=2m
+中国天气, https://tvhub.vercel.app/bestv.php?id=zgqx&q=ld
+内蒙古卫视,  https://tvhub.vercel.app/bestv.php?id=nmgws&q=ld
+宁夏卫视,  https://tvhub.vercel.app/bestv.php?id=nxws&q=ld
+青海卫视, https://tvhub.vercel.app/bestv.php?id=qhws&q=ld
+陕西卫视,  https://tvhub.vercel.app/bestv.php?id=sxws&q=ld
+山西卫视,  https://tvhub.vercel.app/bestv.php?id=shanxiws&q=ld
+厦门卫视,  https://tvhub.vercel.app/bestv.php?id=xmws&q=ld
+康巴卫视, https://tvhub.vercel.app/bestv.php?id=kbws&q=sd
+新疆卫视,  https://tvhub.vercel.app/bestv.php?id=xjws&q=ld
+兵团卫视,  https://tvhub.vercel.app/bestv.php?id=btws&q=ld
+西藏卫视,  https://tvhub.vercel.app/bestv.php?id=xzws&q=sd
+西藏藏语卫视,  https://tvhub.vercel.app/bestv.php?id=xzwszy&q=sd
 北京纪实科教, https://tvhub.vercel.app/bestv.php?id=dajs8m
 卡酷少儿, https://tvhub.vercel.app/bestv.php?id=kkse8m
 东方影视, https://tvhub.vercel.app/bestv.php?id=dfyshd8m
@@ -148,7 +148,7 @@ CETV4HD, https://tvhub.vercel.app/bestv.php?id=zgjy4hd8m
 哈哈炫动, https://tvhub.vercel.app/bestv.php?id=hhxd8m
 法治天地, https://tvhub.vercel.app/bestv.php?id=fztd8m
 欢笑剧场, https://tvhub.vercel.app/bestv.php?id=hxjc8m
-欢笑剧场4K, https://tvhub.vercel.app/bestv.php?id=hxjc4k&q=15m
+欢笑剧场4K, https://tvhub.vercel.app/bestv.php?id=hxjc4k&q=uhd
 都市剧场, https://tvhub.vercel.app/bestv.php?id=dsjc8m
 七彩戏剧, https://tvhub.vercel.app/bestv.php?id=qcxjhd8m
 劲爆体育, https://tvhub.vercel.app/bestv.php?id=jbtyhd8m
@@ -159,15 +159,15 @@ CETV4HD, https://tvhub.vercel.app/bestv.php?id=zgjy4hd8m
 乐游HD, https://tvhub.vercel.app/bestv.php?id=qjshd8m
 魅力足球, https://tvhub.vercel.app/bestv.php?id=mlyyhd8m
 上海教育, https://tvhub.vercel.app/bestv.php?id=setvhd
-浦东电视台, https://tvhub.vercel.app/bestv.php?id=hhse&q=2m
+浦东电视台, https://tvhub.vercel.app/bestv.php?id=hhse&q=sd
 足球频道, https://tvhub.vercel.app/bestv.php?id=zqpd8m
 茶频道, https://tvhub.vercel.app/bestv.php?id=cpdhdavs8m
 快乐垂钓, https://tvhub.vercel.app/bestv.php?id=klcd8m
 金鹰纪实, https://tvhub.vercel.app/bestv.php?id=jyjs8m
-金鹰卡通, https://tvhub.vercel.app/bestv.php?id=jykt&q=1m
+金鹰卡通, https://tvhub.vercel.app/bestv.php?id=jykt&q=ld
 陶瓷频道, https://tvhub.vercel.app/bestv.php?id=taocihd
-嘉佳卡通, https://tvhub.vercel.app/bestv.php?id=jjkt&q=1m
-财富天下, https://tvhub.vercel.app/bestv.php?id=cftx&q=2m
+嘉佳卡通, https://tvhub.vercel.app/bestv.php?id=jjkt&q=ld
+财富天下, https://tvhub.vercel.app/bestv.php?id=cftx&q=sd
 戏曲精选, https://tvhub.vercel.app/bestv.php?id=xqjx8m
 热门综艺, https://tvhub.vercel.app/bestv.php?id=rmzy8m
 超级体育, https://tvhub.vercel.app/bestv.php?id=qcsj8m
@@ -183,18 +183,18 @@ CETV4HD, https://tvhub.vercel.app/bestv.php?id=zgjy4hd8m
 全球大片, https://tvhub.vercel.app/bestv.php?id=qqdp8m
 热门剧场, https://tvhub.vercel.app/bestv.php?id=rmjc8m
 汽车世界, https://tvhub.vercel.app/bestv.php?id=qcsj8m
-空中课堂一年级, https://tvhub.vercel.app/bestv.php?id=kkyinj&q=1m
-空中课堂二年级, https://tvhub.vercel.app/bestv.php?id=kkernj&q=1m
-空中课堂三年级, https://tvhub.vercel.app/bestv.php?id=kksannj&q=1m
-空中课堂四年级, https://tvhub.vercel.app/bestv.php?id=kksinj&q=1m
-空中课堂五年级, https://tvhub.vercel.app/bestv.php?id=kkwunj&q=1m
-空中课堂六年级, https://tvhub.vercel.app/bestv.php?id=kkliunj&q=1m
-空中课堂七年级, https://tvhub.vercel.app/bestv.php?id=kkqinj&q=1m
-空中课堂八年级, https://tvhub.vercel.app/bestv.php?id=kkbanj&q=1m
-空中课堂九年级, https://tvhub.vercel.app/bestv.php?id=kkjiunj&q=1m
-空中课堂高一, https://tvhub.vercel.app/bestv.php?id=kkgaoyinj&q=1m
-空中课堂高二, https://tvhub.vercel.app/bestv.php?id=kkgaoernj&q=1m
-空中课堂高三, https://tvhub.vercel.app/bestv.php?id=kkgaosannj&q=1m
+空中课堂一年级, https://tvhub.vercel.app/bestv.php?id=kkyinj&q=ld
+空中课堂二年级, https://tvhub.vercel.app/bestv.php?id=kkernj&q=ld
+空中课堂三年级, https://tvhub.vercel.app/bestv.php?id=kksannj&q=ld
+空中课堂四年级, https://tvhub.vercel.app/bestv.php?id=kksinj&q=ld
+空中课堂五年级, https://tvhub.vercel.app/bestv.php?id=kkwunj&q=ld
+空中课堂六年级, https://tvhub.vercel.app/bestv.php?id=kkliunj&q=ld
+空中课堂七年级, https://tvhub.vercel.app/bestv.php?id=kkqinj&q=ld
+空中课堂八年级, https://tvhub.vercel.app/bestv.php?id=kkbanj&q=ld
+空中课堂九年级, https://tvhub.vercel.app/bestv.php?id=kkjiunj&q=ld
+空中课堂高一, https://tvhub.vercel.app/bestv.php?id=kkgaoyinj&q=ld
+空中课堂高二, https://tvhub.vercel.app/bestv.php?id=kkgaoernj&q=ld
+空中课堂高三, https://tvhub.vercel.app/bestv.php?id=kkgaosannj&q=ld
 
 , 
 */
