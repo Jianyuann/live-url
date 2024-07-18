@@ -2,10 +2,11 @@
 
 $id = $_GET['id'] ?? '4k';
 $idUrl = array(
-    '4k' => 'http://livews-tp4k.cctv.cn/live/4K0219.stream/',
-    '8k25' => 'http://liveten-tp4k.cctv.cn/live/4K36M/',
+	'4k' => 'http://livews-tp4k.cctv.cn/live/4K0219.stream/',
+	'8k25' => 'http://liveten-tp4k.cctv.cn/live/4K36M/',
 	'8k' => 'http://livews-tp4k.cctv.cn/live/4K36M/',
-	'16-4k'=> 'http://livews-tp4k.cctv.cn/live/CCTV16-4K.stream/'
+	'16-4k'=> 'http://livews-tp4k.cctv.cn/live/CCTV16-4K.stream/',
+	'8kavs'=> 'http://livews-tp4k.cctv.cn/live/8K120M/'
 );
 
 $cache = new Cache(3600, "/tmp/cache/");
