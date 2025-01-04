@@ -13,7 +13,7 @@ jobs:
         sudo chmod a+rx /usr/local/bin/yt-dlp
 
     - name: Download YouTube cookies
-      run: echo "${{ secrets.YOUTUBE_COOKIES }}" > cookie
+      run: echo "${{ secrets.YOUTUBE_COOKIES }}" > ytb_cookie.txt
       
     - name: Get cnbc.m3u8
       run: |
