@@ -1,7 +1,7 @@
 name: Get YouTube Live m3u8
 on:
   schedule:
-    - cron: "55 */5 * * *"
+    - cron: "30 */5 * * *"
   workflow_dispatch:
 jobs:
   build:
@@ -187,7 +187,7 @@ jobs:
         #EXT-X-VERSION:3
         #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
         $(yt-dlp -g --cookies ytb_cookie.txt https://www.youtube.com/@phoenixtvhk/live)
-   
+        EOL
     - name: Get ctsshow.m3u8
       run: |
         touch ./ctsshow.m3u8
