@@ -516,7 +516,14 @@ jobs:
     - name: Remove cookie file before upload
       run: |
          rm -f ytb_cookie.txt || true 
-         
+            
+    - name: Delete workflow runs for remote repo
+      uses: Mattraks/delete-workflow-runs@v2 
+      with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repository: 'Jianyuann/live-url'
+          retain_days: 1
+          keep_minimum_runs: 3     
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
@@ -532,3 +539,5 @@ jobs:
         git commit -m "Update ytblive"
         git remote add origin "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}"
         git push -f -u origin ytblive
+
+
