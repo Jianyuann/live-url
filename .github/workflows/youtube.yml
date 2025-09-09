@@ -202,7 +202,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g --cookies ytb_cookie.txt https://www.youtube.com/@phoenixtvhk/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt https://www.youtube.com/@phoenixtvglobal/live)
           EOL
       - name: Get ctsshow.m3u8
         run: |
