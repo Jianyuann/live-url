@@ -31,7 +31,7 @@ jobs:
           set -e
           mkdir -p m3u8
           
-          sort channels.txt | while IFS="|" read name url; do
+          sort ./channels.txt | while IFS="|" read name url; do
             outfile="./m3u8/${name}.m3u8"
             echo "#EXTM3U" > "$outfile"
             echo "#EXT-X-VERSION:3" >> "$outfile"
