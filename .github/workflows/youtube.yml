@@ -30,8 +30,7 @@ jobs:
         run: |
           set -e
           mkdir -p m3u8
-
-          # 按字母顺序读取 channels.txt
+          
           sort channels.txt | while IFS="|" read name url; do
             outfile="./m3u8/${name}.m3u8"
             echo "#EXTM3U" > "$outfile"
@@ -45,7 +44,16 @@ jobs:
               --remote-components ejs:github \
               -g "$url" >> "$outfile"
           done
+      - name: Remove cookie file before upload
+        run: |
+          rm -f ytb_cookie.txt || true
 
+      - name: Delete workflow runs for remote repo
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
+          
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
