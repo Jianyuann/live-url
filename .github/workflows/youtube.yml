@@ -1,33 +1,30 @@
-name: YT-Live M3U8 Workflow
+name: Auto Download YouTube Live M3U8
+
 on:
   schedule:
-    - cron: '0 */5 * * *'   # 每5小时运行一次
-  workflow_dispatch:      # 支持手动触发
+    - cron: "0 */5 * * *"
+  workflow_dispatch:
 
 jobs:
-  generate:
+  generate-m3u8:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Install Deno
+        run: |
+          curl -fsSL https://deno.land/x/install/install.sh | sh
+          echo "${HOME}/.deno/bin" >> $GITHUB_PATH
 
       - name: Install yt-dlp
-        run: python3 -m pip install -U yt-dlp
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v2
-
-      - name: Create YT cookies file
-        shell: bash
         run: |
-          echo "$YOUTUBE_COOKIES" > ytb_cookie.txt
-        env:
-          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
+          chmod a+rx /usr/local/bin/yt-dlp
+
+      - name: Prepare cookies
+        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > ytb_cookie.txt
 
       - name: Generate m3u8 for each channel
         shell: bash
@@ -37,27 +34,34 @@ jobs:
             printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > "${name}.m3u8"
           done < channels.txt
 
-      - name: Remove cookies file
-        run: rm ytb_cookie.txt
+            echo "Downloading ${name} from ${url} ..."
+            yt-dlp \
+              --cookies ytb_cookie.txt \
+              --js-runtimes deno \
+              --remote-components ejs:github \
+              -g "$url" >> "$outfile"
+          done
+      - name: Remove cookie file before upload
+        run: |
+          rm -f ytb_cookie.txt || true
 
-      - name: Delete old workflow runs
+      - name: Delete workflow runs for remote repo
         uses: Mattraks/delete-workflow-runs@v2
         with:
-          token: ${{ github.token }}
+          retain_days: 1
           keep_minimum_runs: 3
-
-      - name: Upload m3u8 artifacts
+          
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ytblive-m3u8
-          path: '*.m3u8'
+          name: youtube-live-m3u8
+          path: m3u8/
 
-      - name: Commit and push m3u8 files
-        shell: bash
+      - name: Push to dedicated branch
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git checkout ytblive || git checkout -b ytblive
-          git add *.m3u8
-          git commit -m "Update ytblive m3u8 files"
-          git push origin ytblive
+          git checkout -B ytblive
+          git add m3u8
+          git commit -m "Update youtube live m3u8"
+          git push -f "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" ytblive
