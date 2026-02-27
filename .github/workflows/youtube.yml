@@ -16,7 +16,12 @@ jobs:
         run: |
           curl -fsSL https://deno.land/x/install/install.sh | sh
           echo "${HOME}/.deno/bin" >> $GITHUB_PATH
-          deno --version
+
+      - name: Verify Deno installation
+        run: |
+          echo "Deno path: $(which deno || echo 'not in PATH yet')"
+          echo "Trying direct path: ${HOME}/.deno/bin/deno --version"
+          ${HOME}/.deno/bin/deno --version
 
       - name: Install yt-dlp
         run: |
@@ -33,16 +38,36 @@ jobs:
 
       - name: Generate m3u8 for each channel
         shell: bash
+        env:
+          DENO_BIN: ${{ runner.home }}/.deno/bin/deno
         run: |
+          # 确保 Deno 在 PATH 中
+          export PATH="${HOME}/.deno/bin:$PATH"
+          
+          # 验证 Deno 可用
+          echo "Deno version: $(deno --version)"
+          echo "yt-dlp version: $(yt-dlp --version)"
+          
           # 获取脚本所在目录（yaml同路径）
           SCRIPT_DIR="${{ github.workspace }}"
           cd "$SCRIPT_DIR"
           
           echo "=== 开始处理 channels.txt ==="
           echo "当前目录: $(pwd)"
+          
+          if [ ! -f "channels.txt" ]; then
+            echo "❌ ERROR: channels.txt not found!"
+            ls -la
+            exit 1
+          fi
+          
           echo "channels.txt 内容:"
           cat channels.txt
           echo "==============================="
+          
+          # 计数器
+          success_count=0
+          fail_count=0
           
           # 读取 channels.txt，处理每个频道
           while IFS='|' read -r name url || [ -n "$name" ]; do
@@ -60,13 +85,14 @@ jobs:
             echo "🔗 URL: $url"
             
             # 尝试获取直播流地址，失败不退出
-            # Deno 默认启用，也可显式指定 --js-runtimes deno
+            # 显式指定 Deno 路径解决 JavaScript challenge
             addr=$(timeout 60 yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno "$url" 2>&1)
             exit_code=$?
             
             if [ $exit_code -ne 0 ]; then
               echo "⚠️  FAILED: $name (exit code: $exit_code)"
               echo "# 直播暂时不可用 - $(date '+%Y-%m-%d %H:%M:%S')" > "m3u8/${name}.m3u8"
+              ((fail_count++))
               continue
             fi
             
@@ -75,15 +101,19 @@ jobs:
               printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" \
                 "$addr" > "m3u8/${name}.m3u8"
               echo "✅  SUCCESS: $name"
+              ((success_count++))
             else
               echo "⚠️  FAILED: $name - 返回无效地址"
               echo "# 直播暂时不可用 - $(date '+%Y-%m-%d %H:%M:%S')" > "m3u8/${name}.m3u8"
+              ((fail_count++))
             fi
             
           done < channels.txt
           
           echo "==============================="
           echo "=== 处理完成 ==="
+          echo "✅ 成功: $success_count"
+          echo "⚠️  失败: $fail_count"
           echo "生成的文件:"
           ls -la m3u8/
 
