@@ -1,4 +1,4 @@
-name: Auto Download YouTube Live M3U8
+name: Get YouTube Live m3u8
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  generate-m3u8:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -22,47 +22,619 @@ jobs:
           curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
           chmod a+rx /usr/local/bin/yt-dlp
 
-      - name: Prepare cookies
-        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > .github/workflows/ytb_cookie.txt
+      - name: Download YouTube cookies
+        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > ytb_cookie.txt
 
-      - name: Create m3u8 directory
-        run: mkdir -p m3u8
-
-      - name: Generate m3u8 for each channel
-        shell: bash
+      - name: Get cnbc.m3u8
+        continue-on-error: true
         run: |
-          export PATH="${HOME}/.deno/bin:$PATH"
-          cd .github/workflows
-          
-          while IFS='|' read -r name url || [ -n "$name" ]; do
-            [[ -z "$name" || "$name" =~ ^# ]] && continue
-            name=$(echo "$name" | xargs)
-            url=$(echo "$url" | xargs)
-            [[ -z "$url" ]] && continue
-            
-            addr=$(timeout 60 yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno "$url" 2>&1) || true
-            
-            if [[ "$addr" =~ ^https?:// ]]; then
-              printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > "../../m3u8/${name}.m3u8"
-            else
-              touch "../../m3u8/${name}.m3u8"
-            fi
-          done < channels.txt
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CNBC/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cnbc.m3u8
+          else
+            touch ./cnbc.m3u8
+          fi
+
+      - name: Get cbsnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CBSNews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cbsnews.m3u8
+          else
+            touch ./cbsnews.m3u8
+          fi
+
+      - name: Get apnewslive.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@AssociatedPress/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./apnewslive.m3u8
+          else
+            touch ./apnewslive.m3u8
+          fi
+
+      - name: Get ctitalkshow.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ctitalkshow/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ctitalkshow.m3u8
+          else
+            touch ./ctitalkshow.m3u8
+          fi
+
+      - name: Get ttvnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=xL0ch83RAK8 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ttvnews.m3u8
+          else
+            touch ./ttvnews.m3u8
+          fi
+
+      - name: Get ftvnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=ylYJSBUgaMA 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ftvnews.m3u8
+          else
+            touch ./ftvnews.m3u8
+          fi
+
+      - name: Get ctsnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=wM0g8EoUZ_E 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ctsnews.m3u8
+          else
+            touch ./ctsnews.m3u8
+          fi
+
+      - name: Get ctvnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/twctvnews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ctvnews.m3u8
+          else
+            touch ./ctvnews.m3u8
+          fi
+
+      - name: Get setlive.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=MV9mI0GChwo 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./setlive.m3u8
+          else
+            touch ./setlive.m3u8
+          fi
+
+      - name: Get channeltv.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/ChannelsTelevision/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./channeltv.m3u8
+          else
+            touch ./channeltv.m3u8
+          fi
+
+      - name: Get setinews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/setmoney159/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./setinews.m3u8
+          else
+            touch ./setinews.m3u8
+          fi
+
+      - name: Get ebcnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/newsebc/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ebcnews.m3u8
+          else
+            touch ./ebcnews.m3u8
+          fi
+
+      - name: Get globalnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=6IquAgfvYmc 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./globalnews.m3u8
+          else
+            touch ./globalnews.m3u8
+          fi
+
+      - name: Get tvbs.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=m_dhMSvUCIc 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./tvbs.m3u8
+          else
+            touch ./tvbs.m3u8
+          fi
+
+      - name: Get ebcfnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@57ETFN/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ebcfnews.m3u8
+          else
+            touch ./ebcfnews.m3u8
+          fi
+
+      - name: Get cctv4.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/ChineseInternatioify/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cctv4.m3u8
+          else
+            touch ./cctv4.m3u8
+          fi
+
+      - name: Get eftv.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/EFTV01/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./eftv.m3u8
+          else
+            touch ./eftv.m3u8
+          fi
+
+      - name: Get mnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@mnews-tw/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./mnews.m3u8
+          else
+            touch ./mnews.m3u8
+          fi
+
+      - name: Get daaione.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=MIqUplvSRWA 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./daaione.m3u8
+          else
+            touch ./daaione.m3u8
+          fi
+
+      - name: Get daaitwo.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=DTNkEm6jaqQ 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./daaitwo.m3u8
+          else
+            touch ./daaitwo.m3u8
+          fi
+
+      - name: Get phoenixnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@phoenixtvglobal/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./phoenixnews.m3u8
+          else
+            touch ./phoenixnews.m3u8
+          fi
+
+      - name: Get ctsshow.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/TBSCTSSHOW/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ctsshow.m3u8
+          else
+            touch ./ctsshow.m3u8
+          fi
+
+      - name: Get ebcyoyo.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/yoyotvebc/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000\n%s\n" "$addr" > ./ebcyoyo.m3u8
+          else
+            touch ./ebcyoyo.m3u8
+          fi
+
+      - name: Get ctinews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/live/vr3XyVCR4T0 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ctinews.m3u8
+          else
+            touch ./ctinews.m3u8
+          fi
+
+      - name: Get parliamentarytv.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=Af0TFVbxvAQ 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./parliamentarytv.m3u8
+          else
+            touch ./parliamentarytv.m3u8
+          fi
+
+      - name: Get abcaustralia.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/NewsOnABC/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./abcaustralia.m3u8
+          else
+            touch ./abcaustralia.m3u8
+          fi
+
+      - name: Get abcnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/ABCNews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./abcnews.m3u8
+          else
+            touch ./abcnews.m3u8
+          fi
+
+      - name: Get abc7news.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ABC7/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./abc7news.m3u8
+          else
+            touch ./abc7news.m3u8
+          fi
+
+      - name: Get sbn.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/sonlifetv/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./sbn.m3u8
+          else
+            touch ./sbn.m3u8
+          fi
+
+      - name: Get africanews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@africanews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./africanews.m3u8
+          else
+            touch ./africanews.m3u8
+          fi
+
+      - name: Get arirangtv.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/arirang/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./arirangtv.m3u8
+          else
+            touch ./arirangtv.m3u8
+          fi
+
+      - name: Get cna.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/channelnewsasia/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cna.m3u8
+          else
+            touch ./cna.m3u8
+          fi
+
+      - name: Get bernamanews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=yWYy7Lpeo3M 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./bernamanews.m3u8
+          else
+            touch ./bernamanews.m3u8
+          fi
+
+      - name: Get annnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ANNnewsCH/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./annnews.m3u8
+          else
+            touch ./annnews.m3u8
+          fi
+
+      - name: Get fnnnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@FNNnewsCH/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./fnnnews.m3u8
+          else
+            touch ./fnnnews.m3u8
+          fi
+
+      - name: Get tbsnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@tbsnewsdig/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./tbsnews.m3u8
+          else
+            touch ./tbsnews.m3u8
+          fi
+
+      - name: Get bloomberg.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@markets/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./bloomberg.m3u8
+          else
+            touch ./bloomberg.m3u8
+          fi
+
+      - name: Get nbcnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/nbcnews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000\n%s\n" "$addr" > ./nbcnews.m3u8
+          else
+            touch ./nbcnews.m3u8
+          fi
+
+      - name: Get nbc2news.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/NBC2swfl/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000\n%s\n" "$addr" > ./nbc2news.m3u8
+          else
+            touch ./nbc2news.m3u8
+          fi
+
+      - name: Get gbnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@GBNewsOnline/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./gbnews.m3u8
+          else
+            touch ./gbnews.m3u8
+          fi
+
+      - name: Get aljazeera.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/AlJazeeraEnglish/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./aljazeera.m3u8
+          else
+            touch ./aljazeera.m3u8
+          fi
+
+      - name: Get trtworld.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/trtworld/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./trtworld.m3u8
+          else
+            touch ./trtworld.m3u8
+          fi
+
+      - name: Get france24.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/france24english/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000\n%s\n" "$addr" > ./france24.m3u8
+          else
+            touch ./france24.m3u8
+          fi
+
+      - name: Get français24.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/france24/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000\n%s\n" "$addr" > ./français24.m3u8
+          else
+            touch ./français24.m3u8
+          fi
+
+      - name: Get euronews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/euronews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000\n%s\n" "$addr" > ./euronews.m3u8
+          else
+            touch ./euronews.m3u8
+          fi
+
+      - name: Get dwnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/dwnews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000\n%s\n" "$addr" > ./dwnews.m3u8
+          else
+            touch ./dwnews.m3u8
+          fi
+
+      - name: Get hokkaidonews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/htbnews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./hokkaidonews.m3u8
+          else
+            touch ./hokkaidonews.m3u8
+          fi
+
+      - name: Get yntnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ytnnews24/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./yntnews.m3u8
+          else
+            touch ./yntnews.m3u8
+          fi
+
+      - name: Get nasaearthview.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@NASA/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./nasaearthview.m3u8
+          else
+            touch ./nasaearthview.m3u8
+          fi
+
+      - name: Get kpop.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@thekpop/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./kpop.m3u8
+          else
+            touch ./kpop.m3u8
+          fi
+
+      - name: Get hitfm.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@LiveMusicRadio/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./hitfm.m3u8
+          else
+            touch ./hitfm.m3u8
+          fi
+
+      - name: Get skynews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@SkyNews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./skynews.m3u8
+          else
+            touch ./skynews.m3u8
+          fi
+
+      - name: Get nhkworld.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@nhkworldjapan/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./nhkworld.m3u8
+          else
+            touch ./nhkworld.m3u8
+          fi
+
+      - name: Get cgtn.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CGTNEurope/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cgtn.m3u8
+          else
+            touch ./cgtn.m3u8
+          fi
+
+      - name: Get foxlivenow.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@livenowfox/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./foxlivenow.m3u8
+          else
+            touch ./foxlivenow.m3u8
+          fi
+
+      - name: Get cbcnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CBCNews/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./cbcnews.m3u8
+          else
+            touch ./cbcnews.m3u8
+          fi
+
+      - name: Get ndtvnews.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/ndtv/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./ndtvnews.m3u8
+          else
+            touch ./ndtvnews.m3u8
+          fi
+
+      - name: Get indiatoday.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/indiatoday/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./indiatoday.m3u8
+          else
+            touch ./indiatoday.m3u8
+          fi
+
+      - name: Get earthlive4k.m3u8
+        continue-on-error: true
+        run: |
+          addr=$(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@Sen/live 2>/dev/null) || true
+          if [[ "$addr" =~ ^https?:// ]]; then
+            printf "#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n" "$addr" > ./earthlive4k.m3u8
+          else
+            touch ./earthlive4k.m3u8
+          fi
 
       - name: Remove cookie file
-        run: rm -f .github/workflows/ytb_cookie.txt || true
+        run: rm -f ytb_cookie.txt || true
 
-      - name: Upload artifacts
+      - name: Delete workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          retain_days: 1
+          keep_minimum_runs: 3
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: youtube-live-m3u8
-          path: m3u8/
+          name: ytblive-m3u8
+          path: "*.m3u8"
 
       - name: Push to ytblive branch
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git checkout -B ytblive
-          git add m3u8
-          git commit -m "Update youtube live m3u8" || exit 0
+          git add *.m3u8
+          git commit -m "Update ytblive" || exit 0
           git push -f "https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}" ytblive
