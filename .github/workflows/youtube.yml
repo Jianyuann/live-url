@@ -27,7 +27,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@CNBC/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CNBC/live)
           EOL
       - name: Get cbsnews.m3u8
         run: |
@@ -36,7 +36,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@CBSNews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CBSNews/live)
           EOL
       - name: Get apnewslive.m3u8
         run: |
@@ -45,7 +45,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@AssociatedPress/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@AssociatedPress/live)
           EOL
       - name: Get ctitalkshow.m3u8
         run: |
@@ -54,7 +54,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@ctitalkshow/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ctitalkshow/live)
           EOL
       - name: Get ttvnews.m3u8
         run: |
@@ -63,7 +63,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=xL0ch83RAK8)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=xL0ch83RAK8)
           EOL
       - name: Get ftvnews.m3u8
         run: |
@@ -72,7 +72,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=ylYJSBUgaMA)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=ylYJSBUgaMA)
           EOL
       - name: Get ctsnews.m3u8
         run: |
@@ -81,7 +81,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=wM0g8EoUZ_E)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=wM0g8EoUZ_E)
           EOL
       - name: Get ctvnews.m3u8
         run: |
@@ -90,7 +90,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/twctvnews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/twctvnews/live)
           EOL
       - name: Get setlive.m3u8
         run: |
@@ -99,7 +99,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@setnews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@setnews/live)
           EOL
       - name: Get channeltv.m3u8
         run: |
@@ -108,7 +108,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/ChannelsTelevision/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/ChannelsTelevision/live)
           EOL
       - name: Get setinews.m3u8
         run: |
@@ -117,7 +117,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/setmoney159/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/setmoney159/live)
           EOL
       - name: Get ebcnews.m3u8
         run: |
@@ -126,7 +126,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/newsebc/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/newsebc/live)
           EOL
       - name: Get globalnews.m3u8
         run: |
@@ -135,7 +135,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=6IquAgfvYmc)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=6IquAgfvYmc)
           EOL
       - name: Get tvbs.m3u8
         run: |
@@ -144,7 +144,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=m_dhMSvUCIc)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=m_dhMSvUCIc)
           EOL
       - name: Get ebcfnews.m3u8
         run: |
@@ -153,7 +153,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@57ETFN/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@57ETFN/live)
           EOL
       - name: Get cctv4.m3u8
         run: |
@@ -162,7 +162,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/ChineseInternatioify/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/ChineseInternatioify/live)
           EOL
       - name: Get eftv.m3u8
         run: |
@@ -171,7 +171,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/EFTV01/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/EFTV01/live)
           EOL
       - name: Get mnews.m3u8
         run: |
@@ -180,7 +180,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@mnews-tw/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@mnews-tw/live)
           EOL
       - name: Get daaione.m3u8
         run: |
@@ -189,7 +189,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=MIqUplvSRWA)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=MIqUplvSRWA)
           EOL
       - name: Get daaitwo.m3u8
         run: |
@@ -198,7 +198,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=QDxRJP-wfeI)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=QDxRJP-wfeI)
           EOL
       - name: Get phoenixnews.m3u8
         run: |
@@ -207,7 +207,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@phoenixtvglobal/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@phoenixtvglobal/live)
           EOL
       - name: Get ctsshow.m3u8
         run: |
@@ -216,7 +216,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/TBSCTSSHOW/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/TBSCTSSHOW/live)
           EOL
       - name: Get ebcyoyo.m3u8
         run: |
@@ -225,7 +225,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/yoyotvebc/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/yoyotvebc/live)
           EOL
       - name: Get ctinews.m3u8
         run: |
@@ -234,7 +234,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/live/vr3XyVCR4T0)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/live/vr3XyVCR4T0)
           EOL
       - name: Get parliamentarytv.m3u8
         run: |
@@ -243,7 +243,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=Af0TFVbxvAQ)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=Af0TFVbxvAQ)
           EOL
       - name: Get abcaustralia.m3u8
         run: |
@@ -252,7 +252,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/NewsOnABC/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/NewsOnABC/live)
           EOL
       - name: Get abcnews.m3u8
         run: |
@@ -261,7 +261,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/ABCNews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/ABCNews/live)
           EOL
       - name: Get abc7news
         run: |
@@ -270,7 +270,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@ABC7/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ABC7/live)
           EOL
       - name: Get sbn.m3u8
         run: |
@@ -279,7 +279,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/sonlifetv/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/sonlifetv/live)
           EOL
       - name: Get africanews.m3u8
         run: |
@@ -288,7 +288,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@africanews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@africanews/live)
           EOL
       - name: Get arirangtv.m3u8
         run: |
@@ -297,7 +297,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/arirang/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/arirang/live)
           EOL
       - name: Get cna.m3u8
         run: |
@@ -306,7 +306,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/channelnewsasia/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/channelnewsasia/live)
           EOL
       - name: Get bernamanews.m3u8
         run: |
@@ -315,7 +315,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/watch?v=3j2S3yB6WOw)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/watch?v=3j2S3yB6WOw)
           EOL
       - name: Get annnews.m3u8
         run: |
@@ -324,7 +324,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@ANNnewsCH/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ANNnewsCH/live)
           EOL
       - name: Get fnnnews.m3u8
         run: |
@@ -333,7 +333,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@FNNnewsCH/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@FNNnewsCH/live)
           EOL
       - name: Get tbsnews.m3u8
         run: |
@@ -342,7 +342,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@tbsnewsdig/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@tbsnewsdig/live)
           EOL
       - name: Get bloomberg.m3u8
         run: |
@@ -351,7 +351,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@markets/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@markets/live)
           EOL
       - name: Get nbcnews.m3u8
         run: |
@@ -360,7 +360,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/nbcnews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/nbcnews/live)
           EOL
       - name: Get nbc2news.m3u8
         run: |
@@ -369,7 +369,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=2560000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/NBC2swfl/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/NBC2swfl/live)
           EOL
       - name: Get gbnews.m3u8
         run: |
@@ -378,7 +378,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@GBNewsOnline/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@GBNewsOnline/live)
           EOL
       - name: Get aljazeera.m3u8
         run: |
@@ -387,7 +387,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/AlJazeeraEnglish/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/AlJazeeraEnglish/live)
           EOL
       - name: Get trtworld.m3u8
         run: |
@@ -396,7 +396,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/trtworld/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/trtworld/live)
           EOL
       - name: Get france24.m3u8
         run: |
@@ -405,7 +405,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/user/france24english/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/user/france24english/live)
           EOL
       - name: Get français24.m3u8
         run: |
@@ -414,7 +414,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/france24/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/france24/live)
           EOL
       - name: Get euronews.m3u8
         run: |
@@ -423,7 +423,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/euronews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/euronews/live)
           EOL
       - name: Get dwnews.m3u8
         run: |
@@ -432,7 +432,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=540000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/dwnews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/dwnews/live)
           EOL
       - name: Get hokkaidonews.m3u8
         run: |
@@ -441,7 +441,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/htbnews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/htbnews/live)
           EOL
       - name: Get yntnews.m3u8
         run: |
@@ -450,7 +450,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@ytnnews24/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@ytnnews24/live)
           EOL
       - name: Get nasaearthview.m3u8
         run: |
@@ -459,7 +459,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@NASA/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@NASA/live)
           EOL
       - name: Get kpop.m3u8
         run: |
@@ -468,7 +468,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@thekpop/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@thekpop/live)
           EOL
       - name: Get hitfm.m3u8
         run: |
@@ -477,7 +477,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@LiveMusicRadio/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@LiveMusicRadio/live)
           EOL
       - name: Get skynews.m3u8
         run: |
@@ -486,7 +486,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@SkyNews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@SkyNews/live)
           EOL
       - name: Get nhkworld.m3u8
         run: |
@@ -495,7 +495,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@nhkworldjapan/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@nhkworldjapan/live)
           EOL
       - name: Get cgtn.m3u8
         run: |
@@ -504,7 +504,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@CGTNEurope/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CGTNEurope/live)
           EOL
       - name: Get trtworld.m3u8
         run: |
@@ -513,7 +513,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@trtworld/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@trtworld/live)
           EOL
       - name: Get foxlivenow.m3u8
         run: |
@@ -522,7 +522,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@livenowfox/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@livenowfox/live)
           EOL
       - name: Get cbcnews.m3u8
         run: |
@@ -531,7 +531,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@CBCNews/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@CBCNews/live)
           EOL
       - name: Get ndtvnews.m3u8
         run: |
@@ -540,7 +540,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/ndtv/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/ndtv/live)
           EOL
       - name: Get indiatoday.m3u8
         run: |
@@ -549,7 +549,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/c/indiatoday/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/c/indiatoday/live)
           EOL
       - name: Get earthlive4k.m3u8
         run: |
@@ -558,7 +558,7 @@ jobs:
           #EXTM3U
           #EXT-X-VERSION:3
           #EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000
-          $(yt-dlp -g  --js-runtimes deno https://www.youtube.com/@Sen/live)
+          $(yt-dlp -g --cookies ytb_cookie.txt --js-runtimes deno https://www.youtube.com/@Sen/live)
           EOL
 
       - name: Remove cookie file before upload
