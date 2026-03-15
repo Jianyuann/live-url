@@ -572,7 +572,7 @@ jobs:
           keep_minimum_runs: 3
 
       - name: Upload artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v4
         with:
           name: ytblive m3u8
           path: .
