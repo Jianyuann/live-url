@@ -8,6 +8,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # push m3u8 to ytblive branch
+      actions: write    # delete stale workflow runs
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -91,3 +94,11 @@ jobs:
             git commit -m "Update ytblive $(date -u +%Y-%m-%dT%H:%M:%SZ)"
             git push -f origin ytblive
           fi
+
+      - name: Delete stale workflow runs
+        uses: Mattraks/delete-workflow-runs@v2
+        with:
+          token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          retain_days: 2        # keep today + yesterday; delete everything before the previous day
+          keep_minimum_runs: 3   # never drop below 3 runs of history
