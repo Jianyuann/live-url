@@ -19,8 +19,6 @@ jobs:
     timeout-minutes: 20
 
     env:
-      CHANNELS_FILE: ${{ runner.temp }}/channels.txt
-      COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
       CONCURRENCY: "4"
 
     steps:
@@ -31,6 +29,8 @@ jobs:
 
       - name: Save channel configuration
         shell: bash
+        env:
+          CHANNELS_FILE: ${{ runner.temp }}/channels.txt
         run: |
           set -euo pipefail
 
@@ -98,6 +98,7 @@ jobs:
         shell: bash
         env:
           YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
+          COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
         run: |
           set -euo pipefail
           umask 077
@@ -119,6 +120,9 @@ jobs:
 
       - name: Generate m3u8 playlists
         shell: bash
+        env:
+          CHANNELS_FILE: ${{ runner.temp }}/channels.txt
+          COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
         run: |
           set -uo pipefail
 
@@ -234,6 +238,7 @@ jobs:
             echo "- Concurrency: $CONCURRENCY"
           } >> "$GITHUB_STEP_SUMMARY"
 
+          # Offline channels are expected. Zero successes indicate a global problem.
           if (( success_count == 0 )); then
             echo "::error::All channels failed"
             echo "::error::Check cookies, yt-dlp, Deno/EJS, or YouTube changes"
@@ -268,6 +273,8 @@ jobs:
       - name: Remove YouTube cookies
         if: always()
         shell: bash
+        env:
+          COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
         run: |
           rm -f "$COOKIE_FILE"
 
