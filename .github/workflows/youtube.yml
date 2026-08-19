@@ -2,103 +2,279 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "0 */4 * * *" 
+    - cron: "23 */5 * * *"
   workflow_dispatch:
+
+concurrency:
+  group: youtube-live-m3u8
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  actions: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write   # push m3u8 to ytblive branch
-      actions: write    # delete stale workflow runs
+    timeout-minutes: 20
+
+    env:
+      CHANNELS_FILE: ${{ runner.temp }}/channels.txt
+      COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
+      CONCURRENCY: "4"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Save channel configuration
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          source_file=".github/workflows/channels.txt"
+
+          if [[ ! -s "$source_file" ]]; then
+            echo "::error::$source_file is missing or empty"
+            exit 1
+          fi
+
+          sed 's/\r$//' "$source_file" > "$CHANNELS_FILE"
+
+          channel_count="$(
+            grep -cvE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" || true
+          )"
+
+          if (( channel_count == 0 )); then
+            echo "::error::No channel entries found in $source_file"
+            exit 1
+          fi
+
+          echo "Loaded $channel_count channel entries"
 
       - name: Prepare ytblive branch
+        shell: bash
         run: |
-          DEFAULT=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
-          git fetch origin ytblive "$DEFAULT" || true
-          if git rev-parse --verify origin/ytblive >/dev/null 2>&1; then
+          set -euo pipefail
+
+          if git ls-remote --exit-code --heads origin ytblive >/dev/null 2>&1; then
+            git fetch origin ytblive:refs/remotes/origin/ytblive
             git checkout -B ytblive origin/ytblive
           else
-            git checkout -b ytblive
+            git checkout --orphan ytblive
+            git rm -rf . || true
           fi
-          git checkout "origin/$DEFAULT" -- .github/workflows/channels.txt 2>/dev/null || true
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
         with:
           deno-version: latest
 
-      - name: Install yt-dlp (nightly)
+      - name: Install yt-dlp nightly
+        shell: bash
         run: |
-          curl -L https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp
-          chmod a+rx /usr/local/bin/yt-dlp
-          yt-dlp --version
+          set -euo pipefail
+
+          curl \
+            --fail \
+            --location \
+            --silent \
+            --show-error \
+            --retry 3 \
+            --retry-all-errors \
+            --connect-timeout 15 \
+            --max-time 120 \
+            "https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/yt-dlp" \
+            -o /usr/local/bin/yt-dlp
+
+          chmod 0755 /usr/local/bin/yt-dlp
+
+          echo "yt-dlp version: $(yt-dlp --version)"
+          deno --version
 
       - name: Write YouTube cookies
-        run: echo "${{ secrets.YOUTUBE_COOKIES }}" > ytb_cookie.txt
-
-      - name: Generate m3u8 playlists
+        shell: bash
+        env:
+          YOUTUBE_COOKIES: ${{ secrets.YOUTUBE_COOKIES }}
         run: |
-          set -uo pipefail +e
-          CHANNELS=".github/workflows/channels.txt"
-          if [ ! -f "$CHANNELS" ]; then
-            echo "ERROR: $CHANNELS not found (deploy it to .github/workflows/channels.txt on the default branch)"
+          set -euo pipefail
+          umask 077
+
+          if [[ -z "${YOUTUBE_COOKIES:-}" ]]; then
+            echo "::error::YOUTUBE_COOKIES secret is empty"
             exit 1
           fi
-          echo "Reading channels from $CHANNELS"
 
-          generate_batch() {
-            local ok=0
-            while IFS='=' read -r name url; do
-              case "$name" in
-                ''|\#*) continue ;;
-              esac
-              out="${name}.m3u8"
-              echo "==> Processing $name ($url)"
-              stream_url="$(yt-dlp -g --cookies ytb_cookie.txt "$url" 2>/dev/null || true)"
-              if [ -n "$stream_url" ]; then
-                printf '#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n%s\n' "$stream_url" > "$out"
-                echo "    [OK] $out written"
-                ok=$((ok + 1))
-              else
-                echo "    [WARN] $name failed (skipped, old file kept)"
-              fi
-            done < "$CHANNELS"
-            return $ok
-          }
+          printf '%s\n' "$YOUTUBE_COOKIES" > "$COOKIE_FILE"
+          chmod 0600 "$COOKIE_FILE"
 
-          generate_batch
-          result=$?
-          if [ "$result" -eq 0 ]; then
-            echo "All channels failed on first pass; retrying entire batch once..."
-            generate_batch
-          else
-            echo "Batch completed with $result successful channel(s)."
+          if [[ ! -s "$COOKIE_FILE" ]]; then
+            echo "::error::Cookie file was not created"
+            exit 1
           fi
 
-      - name: Remove cookie before upload
-        if: always()
-        run: rm -f ytb_cookie.txt || true
+          echo "Cookie file prepared in RUNNER_TEMP"
+
+      - name: Generate m3u8 playlists
+        shell: bash
+        run: |
+          set -uo pipefail
+
+          SUCCESS_DIR="$RUNNER_TEMP/ytlive-success"
+          FAILURE_DIR="$RUNNER_TEMP/ytlive-failure"
+          LOG_DIR="$RUNNER_TEMP/ytlive-logs"
+
+          rm -rf "$SUCCESS_DIR" "$FAILURE_DIR" "$LOG_DIR"
+          mkdir -p "$SUCCESS_DIR" "$FAILURE_DIR" "$LOG_DIR"
+
+          export SUCCESS_DIR FAILURE_DIR LOG_DIR COOKIE_FILE RUNNER_TEMP
+
+          grep -vE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" \
+            | awk '{ printf "%s%c", $0, 0 }' \
+            | xargs -0 -r -P "$CONCURRENCY" -I {} bash -c '
+                set -uo pipefail
+
+                line="$1"
+
+                if [[ "$line" != *"="* ]]; then
+                  echo "::warning::Invalid channel entry: missing ="
+                  touch "$FAILURE_DIR/invalid-$RANDOM"
+                  exit 0
+                fi
+
+                name="${line%%=*}"
+                url="${line#*=}"
+
+                name="${name#"${name%%[![:space:]]*}"}"
+                name="${name%"${name##*[![:space:]]}"}"
+                url="${url#"${url%%[![:space:]]*}"}"
+                url="${url%"${url##*[![:space:]]}"}"
+
+                if [[ -z "$name" || -z "$url" ]]; then
+                  echo "::warning::Invalid channel entry: empty name or URL"
+                  touch "$FAILURE_DIR/invalid-$RANDOM"
+                  exit 0
+                fi
+
+                if [[ "$name" == */* || "$name" == *".."* ]]; then
+                  echo "::warning::Unsafe output filename: $name"
+                  touch "$FAILURE_DIR/invalid-$RANDOM"
+                  exit 0
+                fi
+
+                if [[ "$url" != https://www.youtube.com/* &&
+                      "$url" != https://youtube.com/* &&
+                      "$url" != https://youtu.be/* ]]; then
+                  echo "::warning::Unsupported URL for $name"
+                  touch "$FAILURE_DIR/$name"
+                  exit 0
+                fi
+
+                out="${name}.m3u8"
+                tmp="${out}.tmp"
+                log="$LOG_DIR/${name}.log"
+
+                rm -f "$tmp" "$log"
+                echo "==> Processing $name"
+
+                stream_url="$(
+                  yt-dlp \
+                    --cookies "$COOKIE_FILE" \
+                    --js-runtimes deno \
+                    --no-playlist \
+                    --no-warnings \
+                    --retries 0 \
+                    --fragment-retries 0 \
+                    --socket-timeout 30 \
+                    -g "$url" \
+                    2>"$log"
+                )"
+                status=$?
+
+                if [[ $status -eq 0 && -n "$stream_url" ]]; then
+                  {
+                    printf "#EXTM3U\n"
+                    printf "#EXT-X-VERSION:3\n"
+                    printf "#EXT-X-STREAM-INF:PROGRAM-ID=1,BANDWIDTH=5400000\n"
+                    printf "%s\n" "$stream_url"
+                  } > "$tmp"
+
+                  mv -f "$tmp" "$out"
+                  touch "$SUCCESS_DIR/$name"
+                  echo "    [OK] $out written"
+                else
+                  rm -f "$tmp"
+                  touch "$FAILURE_DIR/$name"
+                  echo "    [WARN] $name unavailable; old file retained"
+
+                  if [[ -s "$log" ]]; then
+                    tail -n 5 "$log" | sed "s/^/        /"
+                  fi
+                fi
+
+                rm -f "$log"
+              ' _ {}
+
+          success_count="$(find "$SUCCESS_DIR" -maxdepth 1 -type f | wc -l | tr -d ' ')"
+          failure_count="$(find "$FAILURE_DIR" -maxdepth 1 -type f | wc -l | tr -d ' ')"
+          total_count=$((success_count + failure_count))
+
+          echo "Total: $total_count"
+          echo "Successful: $success_count"
+          echo "Unavailable or failed: $failure_count"
+
+          {
+            echo "## YouTube Live update"
+            echo
+            echo "- Total entries processed: $total_count"
+            echo "- Successful: $success_count"
+            echo "- Unavailable or failed: $failure_count"
+            echo "- Concurrency: $CONCURRENCY"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if (( success_count == 0 )); then
+            echo "::error::All channels failed"
+            echo "::error::Check cookies, yt-dlp, Deno/EJS, or YouTube changes"
+            exit 1
+          fi
 
       - name: Commit and push to ytblive branch
+        shell: bash
         run: |
-          git config --local user.name "actions"
-          git config --local user.email "action@github.com"
-          git add '*.m3u8' 2>/dev/null || true
+          set -euo pipefail
+
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add -A -- '*.m3u8'
+
           if git diff --cached --quiet; then
-            echo "No changes to commit"
-          else
-            git commit -m "Update ytblive $(date -u +%Y-%m-%dT%H:%M:%SZ)"
-            git push -f origin ytblive
+            echo "No playlist changes to commit"
+            exit 0
           fi
+
+          git commit \
+            -m "Update ytblive $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+          if git ls-remote --exit-code --heads origin ytblive >/dev/null 2>&1; then
+            git push origin ytblive
+          else
+            git push -u origin ytblive
+          fi
+
+      - name: Remove YouTube cookies
+        if: always()
+        shell: bash
+        run: |
+          rm -f "$COOKIE_FILE"
 
       - name: Delete stale workflow runs
         uses: Mattraks/delete-workflow-runs@v2
         with:
           token: ${{ github.token }}
           repository: ${{ github.repository }}
-          retain_days: 2        # keep today + yesterday; delete everything before the previous day
-          keep_minimum_runs: 3   # never drop below 3 runs of history
+          retain_days: 1
+          keep_minimum_runs: 3
