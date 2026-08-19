@@ -2,7 +2,7 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "0 */4 * * *"   # refresh every 4h; YouTube links expire in ~6h
+    - cron: "0 */4 * * *" 
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
       actions: write    # delete stale workflow runs
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Prepare ytblive branch
         run: |
@@ -24,8 +24,7 @@ jobs:
           else
             git checkout -b ytblive
           fi
-          # always use the latest channels.txt from the default branch
-          git checkout "origin/$DEFAULT" -- workflows/channels.txt 2>/dev/null || true
+          git checkout "origin/$DEFAULT" -- .github/workflows/channels.txt 2>/dev/null || true
 
       - name: Setup Deno
         uses: denoland/setup-deno@v2
@@ -43,13 +42,14 @@ jobs:
 
       - name: Generate m3u8 playlists
         run: |
-          set -uo pipefail
-          CHANNELS="workflows/channels.txt"
+          set -uo pipefail +e
+          CHANNELS=".github/workflows/channels.txt"
+          if [ ! -f "$CHANNELS" ]; then
+            echo "ERROR: $CHANNELS not found (deploy it to .github/workflows/channels.txt on the default branch)"
+            exit 1
+          fi
           echo "Reading channels from $CHANNELS"
 
-          # Each channel is tried ONCE (some are not 7x24; retrying a
-          # non-live channel just wastes time). We only retry the whole
-          # batch once if EVERY channel failed.
           generate_batch() {
             local ok=0
             while IFS='=' read -r name url; do
@@ -87,7 +87,7 @@ jobs:
         run: |
           git config --local user.name "actions"
           git config --local user.email "action@github.com"
-          git add -A
+          git add '*.m3u8' 2>/dev/null || true
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
