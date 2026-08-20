@@ -22,7 +22,6 @@ foxlivenow=https://www.youtube.com/@livenowfox/live
 
 # ---- Asia news ----
 cna=https://www.youtube.com/user/channelnewsasia/live
-channelnewsasia=https://www.youtube.com/user/channelnewsasia/live
 nhkworld=https://www.youtube.com/@nhkworldjapan/live
 cgtn=https://www.youtube.com/@CGTNEurope/live
 arirangtv=https://www.youtube.com/user/arirang/live
@@ -34,7 +33,7 @@ hokkaidonews=https://www.youtube.com/c/htbnews/live
 
 # ---- Taiwan / China news ----
 ctvnews=https://www.youtube.com/c/twctvnews/live
-ctsnews=https://www.youtube.com/watch?v=yeYC0mbSIOo
+ctsnews=https://www.youtube.com/watch?v=wM0g8EoUZ_E
 ctitalkshow=https://www.youtube.com/@ctitalkshow/live
 ctsshow=https://www.youtube.com/c/TBSCTSSHOW/live
 ctinews=https://www.youtube.com/live/vr3XyVCR4T0
@@ -56,7 +55,6 @@ eftv=https://www.youtube.com/user/EFTV01/live
 # ---- Europe / Middle East news ----
 aljazeera=https://www.youtube.com/user/AlJazeeraEnglish/live
 trtworld=https://www.youtube.com/c/trtworld/live
-trtworld_alt=https://www.youtube.com/@trtworld/live
 france24=https://www.youtube.com/user/france24english/live
 français24=https://www.youtube.com/c/france24/live
 euronews=https://www.youtube.com/c/euronews/live
