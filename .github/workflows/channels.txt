@@ -55,7 +55,6 @@ eftv=https://www.youtube.com/user/EFTV01/live
 # ---- Europe / Middle East news ----
 aljazeera=https://www.youtube.com/user/AlJazeeraEnglish/live
 trtworld=https://www.youtube.com/c/trtworld/live
-trtworld_alt=https://www.youtube.com/@trtworld/live
 france24=https://www.youtube.com/user/france24english/live
 français24=https://www.youtube.com/c/france24/live
 euronews=https://www.youtube.com/c/euronews/live
