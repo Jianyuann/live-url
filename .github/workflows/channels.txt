@@ -30,7 +30,7 @@ fnnnews=https://www.youtube.com/@FNNnewsCH/live
 tbsnews=https://www.youtube.com/@tbsnewsdig/live
 yntnews=https://www.youtube.com/@ytnnews24/live
 hokkaidonews=https://www.youtube.com/c/htbnews/live
-phoenixnews=https://www.youtube.com/@phoenixtvglobal/live
+phoenixtv=https://www.youtube.com/@phoenixtvglobal/live
 cctv4=https://www.youtube.com/user/ChineseInternatioify/live
 
 # ---- Taiwan news ----
@@ -67,9 +67,10 @@ ndtvnews=https://www.youtube.com/c/ndtv/live
 indiatoday=https://www.youtube.com/c/indiatoday/live
 
 # ---- Other regions ----
-bernamanews=https://www.youtube.com/watch?v=CjfPDxcBGdc
+bernamatv=https://www.youtube.com/watch?v=x-v5Ky2DUBI
 parliamentarytv=https://www.youtube.com/watch?v=Af0TFVbxvAQ
 globalnews=https://www.youtube.com/watch?v=6IquAgfvYmc
+channelstv=https://www.youtube.com/@ChannelsTelevision/live
 
 # ---- Misc / Entertainment ----
 nasaearthview=https://www.youtube.com/@NASA/live
