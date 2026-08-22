@@ -72,7 +72,7 @@ jobs:
         with:
           deno-version: latest
 
-      - name: Install yt-dlp nightly
+      - name: Install yt-dlp
         shell: bash
         run: |
           set -euo pipefail
@@ -86,13 +86,10 @@ jobs:
             --retry-all-errors \
             --connect-timeout 15 \
             --max-time 120 \
-            "https://github.com/yt-dlp/yt-dlp-nightly-builds/releases/latest/download/yt-dlp" \
+            "https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp" \
             -o /usr/local/bin/yt-dlp
 
           chmod 0755 /usr/local/bin/yt-dlp
-
-          echo "yt-dlp version: $(yt-dlp --version)"
-          deno --version
 
       - name: Write YouTube cookies
         shell: bash
