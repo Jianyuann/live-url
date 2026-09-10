@@ -2,7 +2,7 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "* */5 * * *"
+    - cron: "0 0,5,10,15,20 * * *"
   workflow_dispatch:
 
 concurrency:
