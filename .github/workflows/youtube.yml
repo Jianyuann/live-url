@@ -2,7 +2,7 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "23 0,5,10,15,20 * * *"
+    - cron: "23 */4 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -27,6 +27,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Debug scheduled time
+        shell: bash
+        run: |
+          echo "Event name: $GITHUB_EVENT_NAME"
+          echo "Run created at: $GITHUB_RUN_CREATED_AT"
+          echo "Run started at: ${GITHUB_RUN_STARTED_AT:-}" || true
+          date -u
+          date
+          echo "Workflow path: $GITHUB_WORKFLOW"
+
       - name: Save channel configuration
         shell: bash
         env:
@@ -43,7 +53,7 @@ jobs:
 
           sed 's/\r$//' "$source_file" > "$CHANNELS_FILE"
 
-          channel_count="$(
+          channel_count="$([
             grep -cvE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" || true
           )"
 
@@ -139,7 +149,7 @@ jobs:
 
                 line="$1"
 
-                if [[ "$line" != *"="* ]]; then
+                if [[ "$line" != "*""="* ]]; then
                   echo "::warning::Invalid channel entry: missing ="
                   touch "$FAILURE_DIR/invalid-$RANDOM"
                   exit 0
@@ -180,7 +190,7 @@ jobs:
                 rm -f "$tmp" "$log"
                 echo "==> Processing $name"
 
-                stream_url="$(
+                stream_url="$([
                   yt-dlp \
                     --cookies "$COOKIE_FILE" \
                     --js-runtimes deno \
@@ -191,7 +201,7 @@ jobs:
                     --socket-timeout 30 \
                     -g "$url" \
                     2>"$log"
-                )"
+                )]"
                 status=$?
 
                 if [[ $status -eq 0 && -n "$stream_url" ]]; then
