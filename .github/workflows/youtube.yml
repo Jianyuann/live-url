@@ -2,7 +2,7 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "23 */4 * * *"
+    - cron: "23 0,5,10,15,20 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -19,23 +19,13 @@ jobs:
     timeout-minutes: 20
 
     env:
-      CONCURRENCY: "4"
+      CONCURRENCY: "2"
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-
-      - name: Debug scheduled time
-        shell: bash
-        run: |
-          echo "Event name: $GITHUB_EVENT_NAME"
-          echo "Run created at: $GITHUB_RUN_CREATED_AT"
-          echo "Run started at: ${GITHUB_RUN_STARTED_AT:-}" || true
-          date -u
-          date
-          echo "Workflow path: $GITHUB_WORKFLOW"
 
       - name: Save channel configuration
         shell: bash
@@ -131,7 +121,7 @@ jobs:
           CHANNELS_FILE: ${{ runner.temp }}/channels.txt
           COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
         run: |
-          set -uo pipefail
+          set -euo pipefail
 
           SUCCESS_DIR="$RUNNER_TEMP/ytlive-success"
           FAILURE_DIR="$RUNNER_TEMP/ytlive-failure"
@@ -145,11 +135,11 @@ jobs:
           grep -vE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" \
             | awk '{ printf "%s%c", $0, 0 }' \
             | xargs -0 -r -P "$CONCURRENCY" -I {} bash -c '
-                set -uo pipefail
+                set -euo pipefail
 
                 line="$1"
 
-                if [[ "$line" != "*""="* ]]; then
+                if [[ "$line" != *"="* ]]; then
                   echo "::warning::Invalid channel entry: missing ="
                   touch "$FAILURE_DIR/invalid-$RANDOM"
                   exit 0
