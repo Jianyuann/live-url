@@ -2,7 +2,7 @@ name: YouTube Live m3u8
 
 on:
   schedule:
-    - cron: "23 0,5,10,15,20 * * *"
+    - cron: "16 */5 * * *"
   workflow_dispatch:
 
 concurrency:
@@ -43,7 +43,7 @@ jobs:
 
           sed 's/\r$//' "$source_file" > "$CHANNELS_FILE"
 
-          channel_count="$([
+          channel_count="$(
             grep -cvE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" || true
           )"
 
@@ -121,7 +121,7 @@ jobs:
           CHANNELS_FILE: ${{ runner.temp }}/channels.txt
           COOKIE_FILE: ${{ runner.temp }}/ytb_cookie.txt
         run: |
-          set -euo pipefail
+          set -uo pipefail
 
           SUCCESS_DIR="$RUNNER_TEMP/ytlive-success"
           FAILURE_DIR="$RUNNER_TEMP/ytlive-failure"
@@ -135,7 +135,7 @@ jobs:
           grep -vE '^[[:space:]]*(#|$)' "$CHANNELS_FILE" \
             | awk '{ printf "%s%c", $0, 0 }' \
             | xargs -0 -r -P "$CONCURRENCY" -I {} bash -c '
-                set -euo pipefail
+                set -uo pipefail
 
                 line="$1"
 
@@ -165,15 +165,13 @@ jobs:
                   exit 0
                 fi
 
-                case "$url" in
-                  https://www.youtube.com/*|https://youtube.com/*|https://youtu.be/*)
-                    ;; # supported URL
-                  *)
-                    echo "::warning::Unsupported URL for $name"
-                    touch "$FAILURE_DIR/$name"
-                    exit 0
-                    ;;
-                esac
+                if [[ "$url" != https://www.youtube.com/* &&
+                      "$url" != https://youtube.com/* &&
+                      "$url" != https://youtu.be/* ]]; then
+                  echo "::warning::Unsupported URL for $name"
+                  touch "$FAILURE_DIR/$name"
+                  exit 0
+                fi
 
                 out="${name}.m3u8"
                 tmp="${out}.tmp"
@@ -182,7 +180,7 @@ jobs:
                 rm -f "$tmp" "$log"
                 echo "==> Processing $name"
 
-                stream_url="$([
+                stream_url="$(
                   yt-dlp \
                     --cookies "$COOKIE_FILE" \
                     --js-runtimes deno \
@@ -193,7 +191,7 @@ jobs:
                     --socket-timeout 30 \
                     -g "$url" \
                     2>"$log"
-                )]"
+                )"
                 status=$?
 
                 if [[ $status -eq 0 && -n "$stream_url" ]]; then
