@@ -1,7 +1,15 @@
 <?php
 
 $key = "5b28bae827e651b3";
-$id = $_GET['id'] ?? '254';
+$id = $_GET['id'] ?? '262';
+$ts = $_GET['ts'] ?? '';
+$ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+$referer = "https://www.nmtv.cn/";
+
+if ($ts !== '') {
+    proxy_ts($ts, $ua, $referer);
+    exit;
+}
 
 $channels = [
     2 => '吉林卫视',
@@ -12,7 +20,7 @@ $channels = [
     7 => '新闻频道',
     8 => '文化频道',
     9 => '戏曲频道',
-    254 => '内蒙古卫视',
+    262 => '内蒙古卫视',
     126 => '蒙古语卫视',
     127 => '新闻综合频道',
     128 => '经济生活',
@@ -36,6 +44,7 @@ $channels = [
 ];
 
 $targetId = intval($id);
+
 if (strlen($id) <= 2) {
     $apiUrl = "https://clientapi.jlntv.cn/broadcast/list";
 } else {
@@ -45,13 +54,15 @@ if (strlen($id) <= 2) {
 $options = [
     'http' => [
         'method' => 'POST',
-        'header' => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36\r\nContent-Type: application/json; charset=UTF-8",
-        'content' => "n6wT4YYLUZiY/41vQYu5oSHD2lotdczz5ohPQw=="
+        'header' => "User-Agent: $ua\r\nContent-Type: application/json; charset=UTF-8",
+        'content' => "n6wT4YYLUZiY/41vQYu5oSHD2lotdczz5ohPQw==",
+        'timeout' => 15
     ]
 ];
 
 $response = file_get_contents($apiUrl, false, stream_context_create($options));
-$data = base64_decode($response);
+if ($response === false) { http_response_code(502); exit('upstream fail'); }
+$data = base64_decode(trim($response, '"'), true) ?: base64_decode(trim($response, '"'));
 $decrypted = _xxtea_decrypt($data, $key);
 $json = json_decode($decrypted, true);
 $streamUrl = "";
@@ -63,7 +74,53 @@ foreach ($json['data'] as $item) {
     }
 }
 
-header('location:' . $streamUrl);
+if ($streamUrl === "") { http_response_code(404); exit('channel not found'); }
+
+// 吉林频道保持 302；内蒙频道代理 m3u8 并重写 ts 行
+if (strlen($id) <= 2) {
+    header('location:' . $streamUrl);
+} else {
+    proxy_m3u8($streamUrl, $id, $ua, $referer);
+}
+
+function proxy_m3u8($url, $id, $ua, $referer)
+{
+    $ctx = stream_context_create(['http' => [
+        'method' => 'GET',
+        'header' => "User-Agent: $ua\r\nReferer: $referer\r\n",
+        'timeout' => 15
+    ]]);
+    $body = file_get_contents($url, false, $ctx);
+    if ($body === false) { http_response_code(502); exit('m3u8 fail'); }
+
+    $script = basename($_SERVER['SCRIPT_NAME']);
+    $base = preg_replace('~/[^/]*$~', '/', $url);
+    header('Content-Type: application/vnd.apple.mpegurl');
+    header('Cache-Control: no-cache');
+
+    foreach (explode("\n", $body) as $line) {
+        $line = trim($line, "\r");
+        if ($line === '') { echo "\n"; continue; }
+        if ($line[0] === '#') { echo $line . "\n"; continue; }
+        $abs = preg_match('~^https?://~i', $line) ? $line : $base . $line;
+        echo $script . "?id=$id&ts=" . rawurlencode($abs) . "\n";
+    }
+}
+
+function proxy_ts($url, $ua, $referer)
+{
+    if (!preg_match('~^https?://livestream-bt\.nmtv\.cn/~i', $url)) { http_response_code(403); exit; }
+    $ctx = stream_context_create(['http' => [
+        'method' => 'GET',
+        'header' => "User-Agent: $ua\r\nReferer: $referer\r\n",
+        'timeout' => 20
+    ]]);
+    $d = file_get_contents($url, false, $ctx);
+    if ($d === false) { http_response_code(502); exit('ts fail'); }
+    header('Content-Type: video/mp2t');
+    header('Cache-Control: no-cache');
+    echo $d;
+}
 
 // XXTEA解密函数
 function _xxtea_decrypt($str, $key): false|string
